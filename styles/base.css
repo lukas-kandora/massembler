@@ -1,0 +1,14 @@
+*,
+*::before,
+*::after {
+    all: unset
+
+}
+
+dt,
+dd,
+h1,
+h2,
+h3 {
+    display: block;
+}

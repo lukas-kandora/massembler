@@ -1,0 +1,572 @@
+
+body {
+    margin: unset;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main {
+    height: 100%;
+
+    display: grid;
+    /* enable to vertically scroll only command list when command list extends beyond page width *
+    grid-template-columns: 1fr minmax(550px, auto) minmax(min-content, 1fr); /**/
+    /* enable to vertically scroll entire page when comamnd list extends beyond page width */
+    grid-template-columns: 1fr minmax(min-content, 770px) minmax(min-content, 1fr); /**/
+    grid-template-rows: min-content minmax(0px, min-content);
+    grid-gap: 7px;
+    align-items: start;
+}
+
+.main::before,
+.headline-panel {
+    grid-row: 1;
+}
+
+.main::before {
+    content: '';
+
+    grid-column: 1 / span 3;
+    align-self: stretch;
+}
+
+/* this is not nice, but required until there is a better solution */
+.headline-panel::before,
+.command-list::before,
+.info-display::before {
+    content: '\00a0\00a0\00a0';
+    
+    padding: 0px 7px;
+    height: 0px;
+    
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.headline-panel {
+    grid-column: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    padding: 7px 0px;
+}
+
+.headline-panel > :not(:first-child),
+.run-control-panel > :not(:first-child) {
+    margin-left: 7px;
+}
+
+.headline-panel .icon {
+    padding: 15px;
+    --icon-size: 30px;
+}
+
+.header-text-panel {
+    flex-grow: 1;
+
+    display: grid;
+    align-items: baseline;
+}
+
+.header-text-panel > * {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.headline {
+    text-transform: uppercase;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.error-stats-panel {
+    font-size: 28px;
+}
+
+.run-stop-panel,
+.mode-toggle-panel {
+    display: grid;
+}
+
+.run-stop-panel > *,
+.mode-toggle-panel > * {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.run-control-panel {
+    display: flex;
+}
+
+/**
+.mode-toggle-panel > .control-checkbox {
+    display: none;
+}
+/*
+we cannot use this because it makes this checkbox unfocusable
+instead, we use { opacity: 0%; } in colorisation.css
+*/
+
+.mode-toggle-panel > .edit-click-area {
+    --thickness: .30;
+    --gap-ratio: .1;
+}
+
+.reset-button {
+    --inner-ratio: .5;
+    --arrow-factor: 1;
+}
+.step-button {
+    --block-width: .15;
+}
+.run-button {
+    --overlap: .6;
+}
+.edit-mode-button {
+    --thickness: 0.3;
+    --gap-ratio: 0.1;
+}
+
+.command-list,
+.info-display,
+.state-display,
+.manual-panel {
+    grid-row: 2;
+
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.command-list {
+    grid-column: 2;
+
+    display: grid;
+    grid-template-columns: min-content auto;
+    align-content: start;
+    
+    counter-reset: line-counter;
+}
+
+.command-list::before {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+.command-list > * {
+    grid-column: 2;
+}
+/* --- */
+
+.line-add-button {
+    width: 100%;
+    height: 12px;
+    
+    display: grid;
+    place-items: center;
+    
+    --icon-size: 12px;
+    --thickness: 0.35;
+    --direction: 2;
+}
+
+/* .line-add-button::before,
+.line-add-button::after {
+    content: '';
+
+    grid-row: 1;
+    grid-column: 1;
+}
+.line-add-button::before {
+    width: 12px;
+    height: 2px;
+}
+.line-add-button::after {
+    width: 2px;
+    height: 8px;
+} */
+
+.line-panel {
+    position: relative;
+    
+    display: flex;
+    align-items: center;
+    counter-increment: line-counter;
+}
+
+.line-panel::before {
+    content: counter(line-counter);
+
+    position: absolute;
+    right: 100%;
+
+    height: 100%;
+
+    padding: 0px 7px;
+    
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 24px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+}
+
+.line-panel > .line-content-panel {
+    flex-grow: 1;
+
+    min-width: 0px;
+
+    padding: 7px 0px;
+    display: flex;
+    
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 36px;
+}
+.line-panel > .line-content-panel > * {
+    margin-right: 7px;
+}
+
+.line-panel > .line-content-panel > .indentation-panel {
+    min-width: 0px;
+    display: flex;
+}
+
+.line-panel > .line-content-panel > .indentation-panel > .indentation-add-button {
+    width: 30px;
+
+    flex-shrink: 0;
+    
+    display: grid;
+    align-content: center;
+    justify-content: center;
+
+    --icon-size: 12px;
+    --thickness: 0.35;
+    --direction: 1;
+}
+
+.line-panel > .line-content-panel > .indentation-panel > .indentation-button {
+    width: 39.6px;
+    min-width: 0px;
+
+    display: grid;
+    align-content: center;
+    justify-content: center;
+
+    --icon-size: 12px;
+    --thickness: 0.3;
+}
+.line-panel > .line-content-panel > .indentation-panel > .indentation-button::before {
+    transform: rotate(45deg);
+}
+.line-panel > .line-content-panel > .indentation-panel > .indentation-button::after {
+    transform: rotate(135deg);
+}
+
+.line-panel > .line-content-panel > .code-panel {
+    flex-grow: 1;
+
+    display: flex;
+}
+
+.line-panel > .line-content-panel > .code-panel > .command-input {
+    padding: 0px 7px;
+}
+
+.line-panel > .line-content-panel > .code-panel > .args-panel {
+    display: flex;
+}
+
+.line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel {
+    display: flex;
+}
+
+.line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel > .arg-input {
+    margin-left: 7px;
+    padding: 0px 7px;
+}
+
+.line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel:not(:last-child)::after {
+    content: ',';
+
+    display: flex;
+    align-items: center;
+}
+
+.line-panel > .line-content-panel > .comment-panel {
+    padding: 0px 7px;
+    font-size: 24px;
+
+    display: flex;
+}
+
+.line-panel > .line-content-panel > .comment-panel::before {
+    content: ';';
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.line-panel > .line-content-panel > .comment-panel > .comment-input:placeholder-shown:not(:hover):not(:focus) {
+    display: none;
+}
+
+.line-panel > .line-remove-button {
+    width: 60px;
+    height: 60px;
+
+    display: grid;
+    place-items: center;
+
+    --icon-size: 24px;
+    --thickness: .2;
+}
+
+.info-display {
+    grid-column: 2;
+
+    overflow-y: auto;
+
+    display: flex;
+}
+
+.exec-error-panel {
+    flex-grow: 1;
+
+    padding: 0px 7px;
+    font-size: 20px;
+}
+
+.exec-error-clear-button {
+    flex-shrink: 0;
+
+    width: 30px;
+    min-height: 30px;
+    --icon-size: 15px;
+    --thickness: 0.2;
+}
+
+.state-display {
+    grid-column: 3;
+
+    justify-self: left;
+    
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+}
+
+.state-display > *:not(:first-child),
+.manual-panel > *:not(:first-child) {
+    margin-top: 7px;
+}
+
+.line-stack-panel {
+    display: flex;
+
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+    padding: 7px;
+}
+
+.placeholder-index-panel {
+    width: 60px;
+    height: 60px;
+}
+
+.line-index-panel {
+    width: 60px;
+    height: 60px;
+
+    border-style: solid;
+    box-sizing: border-box;
+
+    display: grid;
+    place-content: center;
+
+    font-size: 30px;
+}
+
+.line-index-panel:not(:last-child) {
+    border-width: 2px;
+}
+
+.line-index-panel:last-child {
+    border-width: 3px;
+}
+
+.line-index-panel:last-child,
+.line-index-panel:not(:last-child):nth-child(2) {
+    margin-right: -60px;
+}
+
+.line-index-panel:nth-last-child(2) {
+    margin-left: 60px;
+}
+
+.line-index-panel:not(:last-child):not(:nth-last-child(2)) {
+    margin-left: -50px;
+}
+
+.line-index-panel:nth-child(odd) {
+    margin-top: 4px;
+}
+
+.placeholder-index-panel,
+.line-index-panel:nth-child(even) {
+    margin-bottom: 4px;
+}
+
+/* .line-index-panel:last-child,
+.line-index-panel:nth-last-child(2) {
+    z-index: 1;
+} */
+
+.cmp-state-panel {
+    display: flex;
+
+    padding: 7px;
+}
+
+.cmp-state-panel > :not(:first-child) {
+    margin-left: 7px;
+}
+
+.cmp-state-option {
+    width: 60px;
+    height: 60px;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 48px;
+}
+
+.registers-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: column;
+
+    grid-gap: 5px;
+
+    font-size: 28px;
+}
+
+.register-panel {
+    display: flex;
+    padding: 0px 7px;
+}
+
+.register-panel:nth-child(odd) {
+    grid-column: 1;   
+}
+
+.register-panel:nth-child(even) {
+    grid-column: 2;
+}
+
+.register-name-panel::after {
+    content: '\00a0';
+}
+
+.register-name-panel {
+    flex-grow: 1;
+}
+
+.manual-panel {
+    grid-column: 3;
+}
+
+.manual-headline {
+    padding: 0px 7px;
+    font-size: 36px;
+}
+
+.manual-definition-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.manual-panel dt {
+    padding: 0px 7px;
+
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
+.manual-panel dd {
+    padding: 0px 7px 7px 27px;
+    
+    font-size: 16px;
+}
+
+.manual-panel dd:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+/*
+.line-panel > .remove-panel > .line-remove-button::before,
+.line-panel > .remove-panel > .line-remove-button::after {
+    content: '';
+
+    grid-row: 1;
+    grid-column: 1;
+
+    width: 20px;
+    height: 2px;
+}
+.line-panel > .remove-panel > .line-remove-button:before {
+    transform: rotate(45deg);
+}
+.line-panel > .remove-panel > .line-remove-button:after {
+    transform: rotate(135deg);
+}
+*/
+
+/* read */
+
+.command-list:not(.edit) .line-add-button {
+    visibility: hidden;
+    height: 0px;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel {
+    padding: unset;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .indentation-panel > .indentation-add-button {
+    visibility: hidden;
+    width: 0px;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .command-input {
+    padding: unset;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel > .arg-input {
+    padding: unset;
+    margin-left: unset;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel::before {
+    content: '\00a0';
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .comment-panel {
+    padding: unset;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .comment-panel > .comment-input {
+    padding: unset;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .comment-panel > .comment-input:placeholder-shown {
+    display: none;
+}
+
+.command-list:not(.edit) .line-panel > .line-remove-button {
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+}

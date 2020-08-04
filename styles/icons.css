@@ -1,0 +1,264 @@
+/*
+.icon {
+    --icon-size - width and height of icon
+    --icon-color - color of the icon
+}
+*/
+
+.icon {
+    display: grid;
+    place-items: center;
+
+    align-content: center;
+    justify-content: center;
+
+}
+
+.icon::before,
+.icon::after {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+/*
+.reload {
+    --inner-ration: .7; ratio of inner circle [0, 1]
+    --arrow-factor: .7; scale factor of arrow [0, 1]
+}
+*/
+
+.icon.reload::before {
+    /* 3/4 circle */
+    content: '';
+
+    width: calc(var(--inner-ratio) * var(--icon-size));
+    height: calc(var(--inner-ratio) * var(--icon-size));
+
+    border-radius: 50%;
+    border-width: calc(var(--icon-size) * (1 - var(--inner-ratio)) / 2);
+    border-style: solid;
+    border-color: var(--icon-color) transparent var(--icon-color) var(--icon-color);
+}
+
+.icon.reload::after {
+    /* arrow */
+    content: '';
+
+    --sqrt-2: 1.414213562;
+
+    --shift: calc(((1 + var(--inner-ratio)) * var(--icon-size)) / 2 / var(--sqrt-2));
+    --size: calc((var(--icon-size) - (var(--icon-size) * (1 + var(--inner-ratio))) / 2 / var(--sqrt-2)) * var(--arrow-factor) / 2);
+
+    margin-bottom: var(--shift);
+    margin-left: var(--shift);
+
+    border-top: var(--size) solid transparent;
+    border-right: var(--size) solid var(--icon-color);
+    border-bottom: var(--size) solid var(--icon-color);
+    border-left: var(--size) solid transparent;
+}
+
+/*
+.play {
+}
+*/
+
+.icon.play::before {
+    /* triangle */
+    content: '';
+
+    border-top: calc(var(--icon-size) / 2) solid transparent;
+    border-bottom: calc(var(--icon-size) / 2) solid transparent;
+    border-left: var(--icon-size) solid var(--icon-color);
+}
+
+/*
+.fwd {
+    --overlap: .5; amount of arrow overlapping [0, 1]
+}
+*/
+
+.icon.fwd::before,
+.icon.fwd::after {
+    content: '';
+
+    border-top: calc(.5 * var(--icon-size)) solid transparent;
+    border-bottom: calc(.5 * var(--icon-size)) solid transparent;
+    border-left: calc(var(--overlap) * var(--icon-size)) solid var(--icon-color);
+}
+
+.icon.fwd::before {
+    /* left arrow */
+    margin-right: calc((1 - var(--overlap)) * var(--icon-size));
+}
+
+.icon.fwd::after {
+    /* right arrow */
+    margin-left: calc((1 - var(--overlap)) * var(--icon-size));
+}
+
+/*
+.skip {
+    --block-width: .25; ratio of block width [0, 1]
+}
+*/
+
+.icon.skip::before {
+    /* triangle */
+    content: '';
+
+    border-top: calc(var(--icon-size) / 2) solid transparent;
+    border-bottom: calc(var(--icon-size) / 2) solid transparent;
+    border-left: var(--icon-size) solid var(--icon-color);
+}
+
+.icon.skip::after {
+    /* block */
+    content: '';
+
+    height: var(--icon-size);
+    margin-left: calc((1 - var(--block-width)) * var(--icon-size));
+    border-right: calc(var(--block-width) * var(--icon-size)) solid var(--icon-color);
+}
+
+
+/*
+.icon.eye {
+    --opening: .5; ratio of iris [0, 1]
+    --lense: .25; ratio of lense [0, 1]
+}
+*/
+
+.icon.eye::before {
+    /* ball */
+    content: '';
+
+    --sqrt-2: 1.414213562;
+
+    --inner-size: calc(var(--icon-size) * var(--opening) / var(--sqrt-2));
+    width: var(--inner-size);
+    height: var(--inner-size);
+
+    --border-size: calc(var(--icon-size) * (1 - var(--opening)) / var(--sqrt-2) / 2);
+    border: calc(var(--border-size)) var(--icon-color) solid;
+    border-radius: 50% 0%;
+
+    transform: rotate(45deg);
+}
+
+.icon.eye::after {
+    /* iris */
+    content: '';
+
+    --sqrt-2: 1.414213562;
+
+    --border-size: calc(var(--icon-size) * var(--lense) / var(--sqrt-2) / 2);
+    border: calc(var(--border-size)) var(--icon-color) solid;
+    border-radius: 50%;
+}
+
+/*
+.icon.pen {
+    --thickness: .25; ratio of pen thickness [0, 1]
+    --gap-ratio: .05; ratio od lead gap [0, 1]
+}
+*/
+
+.icon.pen::before {
+    /* stem */
+    content: '';
+
+    --sqrt-2: 1.414213562;
+
+    --length: calc(var(--icon-size) * var(--sqrt-2) * (1 - var(--thickness)));
+    height: calc(var(--length) * (1 - var(--gap-ratio)));
+
+    --margin-length: calc(var(--length) * var(--gap-ratio) / var(--sqrt-2));
+    margin-left: var(--margin-length);
+    margin-bottom: var(--margin-length);
+
+    border-right: calc(var(--icon-size) * var(--thickness) * var(--sqrt-2)) var(--icon-color) solid;
+
+    transform: rotate(45deg);
+}
+
+.icon.pen::after {
+    /* lead */
+    content: '';
+
+    margin-right: calc(var(--icon-size) * (1 - var(--thickness)));
+    margin-top: calc(var(--icon-size) * (1 - var(--thickness)));
+
+    border: calc(var(--icon-size) * var(--thickness) / 2) solid;
+    border-color: transparent transparent var(--icon-color) var(--icon-color);
+}
+
+/*
+.icon.block {
+}
+*/
+
+.icon.block::before {
+    /* block */
+    content: '';
+
+    border: calc(var(--icon-size) / 2) var(--icon-color) solid;
+}
+
+/*
+.icon.cross {
+    --thickness: .7;
+}
+*/
+
+.icon.cross::before,
+.icon.cross::after {
+    /* stem */
+    content: '';
+  
+    --sqrt-2: 1.414213562;
+  
+    --breadth: calc(var(--icon-size) * var(--thickness) / 4 * var(--sqrt-2));
+    --length: calc(var(--icon-size) * var(--sqrt-2) / 2 - 2 * var(--breadth));
+  
+    border: var(--icon-color) solid;
+    border-width: 0px var(--length);
+
+    padding: var(--breadth); 
+    background: var(--icon-color);
+
+}
+
+.icon.cross::before {
+    transform: rotate(45deg);
+}
+.icon.cross::after {
+    transform: rotate(135deg);
+}
+
+/*
+.icon.director {
+    --thickness: .7: 
+    --direction: 0; direction { 0, 1, 2, 3 }
+}
+*/
+
+.icon.director::before {
+    content: '';
+  
+    --sqrt-2: 1.414213562;
+    
+    --bw: calc(var(--thickness) * var(--icon-size) / var(--sqrt-2));
+    --pd: calc((1 - var(--thickness)) * var(--icon-size) / 2);
+    
+    border-top: var(--bw) var(--icon-color) solid;
+    border-right: var(--bw) var(--icon-color) solid;
+    padding: calc(var(--pd) / var(--sqrt-2));
+
+    margin-top: calc(max(0, 1 + var(--direction)) * max(0, 1 - var(--direction)) * var(--pd));
+    margin-right: calc(max(0, 1 + var(--direction) - 1) * max(0, 1 - var(--direction) + 1) * var(--pd));
+    margin-bottom: calc(max(0, 1 + var(--direction) - 2) * max(0, 1 - var(--direction) + 2) * var(--pd));
+    margin-left: calc(max(0, 1 + var(--direction) - 3) * max(0, 1 - var(--direction) + 3) * var(--pd));
+    
+    transform: rotate(calc(-45deg + var(--direction) * 90deg));
+  }

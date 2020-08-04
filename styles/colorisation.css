@@ -1,0 +1,254 @@
+*,
+*::before,
+*::after {
+    --hue-in: 300;
+    --hue-in-b: 0;
+    --saturation-in: 0%;
+    --saturation-in-b: 0%;
+
+    --lightness-in: 1;
+    --lightness-in-b: 1;
+
+    --lightness-tension: 0; /* [-1 ; 1] */
+    --lightness-out: calc(100% * 0.5 * (1 - (2 * var(--lightness-in) - var(--lightness-tension) - 1) / (2 * var(--lightness-in) * var(--lightness-tension) - var(--lightness-tension) - 1)));
+    --lightness-color: hsl(var(--hue-in), var(--saturation-in), var(--lightness-out));
+    
+    --lightness-tension-b: 0; /* [-1 ; 1] */
+    --lightness-out-b: calc(100% * 0.5 * (1 - (2 * var(--lightness-in-b) - var(--lightness-tension-b) - 1) / (2 * var(--lightness-in-b) * var(--lightness-tension-b) - var(--lightness-tension-b) - 1)));
+    --lightness-color-b: hsl(var(--hue-in-b), var(--saturation-in-b), var(--lightness-out-b));
+}
+
+/* color specifications */
+
+.error-stats-panel,
+.line-panel.invalid,
+.line-panel.invalid::before,
+.command-list.edit .code-input.invalid:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input.invalid,
+.command-list.edit .code-input.invalid:hover,
+.command-list.edit .code-input.invalid:focus-within,
+.exec-error-panel,
+.exec-error-clear-button {
+    --hue-in: 0;
+}
+
+.line-panel.active:not(.invalid),
+.line-panel.active:not(.invalid)::before {
+    --hue-in: 210;
+}
+
+.line-panel.active.invalid,
+.line-panel.active.invalid::before {
+    --hue-in: 60;
+}
+
+.line-panel.invalid::before,
+.line-panel.active:not(.invalid),
+.line-panel.invalid:not(.active),
+.line-panel.active,.line-panel.invalid,
+.command-list.edit .code-input.invalid:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input.invalid {
+    --saturation-in: 20%;
+}
+
+.line-panel.active:not(.invalid)::before,
+.line-panel.invalid:not(.active)::before,
+.line-panel.active.invalid::before,
+.exec-error-panel,
+.exec-error-clear-button {
+    --saturation-in: 30%;
+}
+
+.error-stats-panel,
+.command-list.edit .code-input.invalid:hover,
+.command-list.edit .code-input.invalid:focus-within {
+    --saturation-in: 50%;
+}
+
+.main::before,
+:nth-child(even) > .line-panel,
+.state-display,
+.line-stack-panel,
+.cmp-state-panel,
+.register-panel,
+.manual-headline,
+.manual-panel > dl > dt {
+    --lightness-in: .13;
+}
+
+.command-list.edit .code-input:hover,
+.command-list.edit .code-input:focus-within {
+    --lightness-in-b: .13;
+}
+
+:nth-child(odd) > .line-panel,
+.manual-panel > dl > dd {
+    --lightness-in: .15;
+}
+body,
+.headline-panel,
+.control-button,
+.indentation-add-button,
+.indentation-button,
+.line-remove-button,
+.command-list,
+.command-list.edit .code-input:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input.invalid,
+.command-list.edit .comment-panel:hover,
+.command-list.edit .comment-panel:focus-within,
+.state-display,
+.placeholder-index-panel,
+.line-index-panel,
+.cmp-state-option,
+.manual-panel {
+    --lightness-in: .2;
+}
+
+.line-add-button:not(:hover):not(:focus-within) {
+    --lightness-in: .27;
+}
+.line-add-button:hover,
+.line-add-button:focus-within,
+.line-panel.active:not(.invalid)::before,
+.line-panel.invalid:not(.active)::before,
+.line-panel.active.invalid::before,
+.exec-error-panel,
+.exec-error-clear-button {
+    --lightness-in: .33;
+}
+.line-add-button:not(:hover):not(:focus-within),
+.line-add-button:not(:hover):not(:focus-within) {
+    --lightness-in-b: .5;
+}
+.headline,
+.error-stats-panel,
+.command-list.edit .code-input:hover,
+.command-list.edit .code-input:focus-within {
+    --lightness-in: .8;
+}
+
+.control-button,
+.line-add-button:hover,
+.line-add-button:focus-within,
+.indentation-add-button,
+.indentation-button,
+.line-remove-button,
+.command-list.edit .code-input:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input,
+.line-panel::before,
+.arg-panel::after,
+.comment-panel::before,
+.comment-input,
+.exec-error-panel,
+.exec-error-clear-button,
+.line-index-panel,
+.cmp-state-option,
+.register-panel,
+.manual-panel {
+    --lightness-in-b: .8;
+}
+
+/* color applications */
+body,
+.main::before,
+.line-panel,
+.control-button,
+.line-add-button,
+.line-panel.active:not(.invalid)::before,
+.line-panel.invalid:not(.active)::before,
+.line-panel.active.invalid::before,
+.indentation-add-button,
+.indentation-button,
+.line-remove-button,
+.command-list,
+.command-list.edit .code-input,
+.command-list:not(.edit) .code-input.invalid,
+.command-list.edit .comment-panel:hover,
+.command-list.edit .comment-panel:focus-within,
+.exec-error-panel,
+.exec-error-clear-button,
+.state-display,
+.line-index-panel,
+.line-stack-panel,
+.cmp-state-panel,
+.cmp-state-option,
+.register-panel,
+.manual,
+.manual-headline,
+.manual-panel > dl > dt,
+.manual-panel > dl > dd {
+    background-color: var(--lightness-color);
+}
+
+.line-index-panel:last-child {
+    border-color: var(--lightness-color-b);
+}
+
+.headline,
+.error-stats-panel {
+    color: var(--lightness-color);
+}
+
+.line-panel::before,
+.code-input,
+.arg-panel::after,
+.comment-panel::before,
+.comment-input,
+.exec-error-panel,
+.line-index-panel,
+.cmp-state-option,
+.register-panel,
+.manual-panel {
+    color: var(--lightness-color-b);
+}
+
+.control-button,
+.line-add-button,
+.indentation-add-button,
+.indentation-button,
+.line-remove-button,
+.exec-error-clear-button {
+    --icon-color: var(--lightness-color-b);
+}
+
+.placeholder-index-panel {
+    background: repeating-linear-gradient(135deg, var(--lightness-color) 0px, var(--lightness-color) 5px, transparent 5px, transparent 15px, var(--lightness-color) 15px, var(--lightness-color) 20px);
+}
+
+/* more styling */
+.exec-error-panel,
+.exec-error-clear-button:not(:hover):not(:focus) {
+    opacity: 85%;
+}
+
+.control-button:not(:hover):not(:focus-within),
+.line-index-panel:not(:last-child) {
+    opacity: 50%;
+}
+
+.indentation-add-button:not(:hover):not(:focus-within),
+.line-remove-button:not(:hover):not(:focus-within),
+.command-list.edit .comment-panel:not(:hover):not(:focus-within),
+.command-list:not(.edit) .comment-panel,
+.cmp-state-option:not(.active) {
+    opacity: 30%;
+}
+
+.indentation-button:not(:hover):not(:focus-within) {
+    opacity: 5%;
+}
+
+.indentation-add-button,
+.line-add-button,
+.line-remove-button {
+    overflow: hidden;
+}
+
+.line-index-panel:not(:last-child),
+.cmp-state-option {
+    user-select: none;
+}
+
+.info-display {
+    isolation: isolate;
+}

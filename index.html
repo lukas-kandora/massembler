@@ -1,0 +1,55 @@
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/colorisation.css">
+    <!----
+    <link rel="stylesheet" href="styles/reactions.css">
+    <!---->
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/icons.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="scripts/model.js"></script>
+    <script src="scripts/components/arg-panel.js"></script>
+    <script src="scripts/components/command-list.js"></script>
+    <script src="scripts/components/line-panel.js"></script>
+    <script src="scripts/components/manual-panel.js"></script>
+    <script src="scripts/components/run-control-panel.js"></script>
+    <script src="scripts/components/state-display.js"></script>
+    <script src="scripts/script.js"></script>
+
+</head>
+
+<body>
+    <datalist id="command-datalist"></datalist>
+    <main id="main" class="main">
+        <section class="headline-panel">
+            <div class="header-text-panel">
+                <h1 class="headline" :style="programValid ? '' : 'visibility: hidden;'">Massembler</h1>
+                <div class="error-stats-panel" :style="programValid ? 'visibility: hidden;' : ''">
+                    {{ invalidEntryCount }} error{{ invalidEntryCount === 1 ? '' : 's' }} in
+                    {{ invalidLineCount }} line{{ invalidLineCount === 1 ? '' : 's' }}
+                </div>
+            </div>
+            <run-control-panel v-if="!edit" :stage="stage" v-on:run="run" v-on:step="step" v-on:reset="reset"
+                v-on:stop="stop"></run-control-panel>
+            <div class="mode-toggle-panel">
+                <button class="control-button run-mode-button icon play" :style="edit ? '' : 'visibility: hidden;'"
+                    v-on:click="edit = false;"></button>
+                <button class="control-button edit-mode-button icon pen" :style="edit ? 'visibility: hidden;' : ''"
+                    v-on:click="edit = true;"></button>
+            </div>
+        </section>
+        <command-list :class="{ edit: edit }" ref="commandList" :active-line-index="activeLineIndex"
+            v-on:lines-invalidated="invalidLineCount += $event" v-on:entries-invalidated="invalidEntryCount += $event">
+        </command-list>
+        <div class="info-display" v-show="execError !== null">
+            <div class="exec-error-panel">{{ execError === null ? '' : execError.msg }}</div>
+            <button class="exec-error-clear-button icon cross" v-on:click="execError = null;"></button>
+        </div>
+        <state-display ref="stateDisplay" v-show="!edit" v-on:active-line-index="activeLineIndex = $event"></state-display>
+        <manual-panel v-show="edit"></manual-panel>
+    </main>
+</body>

@@ -1,0 +1,107 @@
+@keyframes top-slide-in {
+    0% {
+        clip-path: inset(100% 0% 0% 0%);
+        transform: translateY(-100%);
+        opacity: 0%;
+    }
+    100% {
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+
+@keyframes left-slide-in {
+    0% {
+        clip-path: inset(0% 0% 0% 100%);
+        transform: translateX(-100%);
+        opacity: 0%;
+    }
+    100% {
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+
+.run-control-panel > * {
+    animation-name: top-slide-in;
+    animation-duration: 0.5s;
+    animation-delay: calc(0.0625s * (var(--child-index) - 1));
+    animation-fill-mode: backwards;
+}
+
+.run-control-panel > :nth-child(1) {
+    --child-index: 1;
+}
+
+.run-control-panel > :nth-child(2) {
+    --child-index: 2;
+}
+
+.run-control-panel > :nth-child(3) {
+    --child-index: 3;
+}
+
+.run-control-panel > :nth-child(4) {
+    --child-index: 4;
+}
+
+@keyframes visibility-retainer {
+    0% {
+        visibility: unset;
+    }
+}
+
+.command-list:not(.edit) .line-add-button,
+.indentation-add-button,
+.command-list:not(.edit) .line-remove-button {
+    animation-name: visibility-retainer;
+    animation-duration: 0.5s;
+}
+
+.line-add-button {
+    transition: height 0.5s;
+}
+
+.line-panel {
+    animation-name: left-slide-in;
+    animation-duration: 0.5s;
+}
+
+.line-remove-button {
+    transition:
+        width 0.5s,
+        height 0.5s;
+}
+
+.indentation-add-button {
+    transition: width 0.5s;
+}
+
+@keyframes indentation-button-spread {
+    0% {
+        margin-right: -39.6px;
+        opacity: 0%;
+    }
+}
+
+.indentation-button {
+    animation-name: indentation-button-spread;
+    animation-duration: 0.5s;
+}
+
+.line-index-panel {
+    animation-name: top-slide-in;
+    animation-duration: 0.5s;
+}
+
+.line-index-panel {
+    transition: margin 0.5s;
+}
+
+.state-display {
+    animation-name: left-slide-in;
+    animation-duration: 0.5s;
+}
+
+.manual-panel {
+    animation-name: left-slide-in;
+    animation-duration: 0.5s;
+}
