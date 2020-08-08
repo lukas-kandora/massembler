@@ -12,3 +12,7 @@ h2,
 h3 {
     display: block;
 }
+
+title {
+    display: none;
+}

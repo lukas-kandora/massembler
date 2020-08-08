@@ -40,9 +40,16 @@ window.onload = function () {
         },
         methods: {
             run: function () {
-                do {
-                    this.step();
-                } while (this.stage !== 'stopped' && this.execError === null);
+
+                function fun() {
+                    if (this.stage !== 'stopped' && this.execError === null) {
+                        this.step();
+                        setTimeout(() => fun.call(this), 25);
+                    }
+                }
+
+                this.step();
+                fun.call(this);
             },
             step: function () {
                 const execState = this.execState;
@@ -141,6 +148,13 @@ window.onload = function () {
                             switch (indicesLength) {
                             case 1:
                                 if (newFrame) {
+                                    if (lineIndexStack.length === 63) {
+                                        this.execError = {
+                                            type: 'error',
+                                            msg: "Stack limit exceeded.",
+                                        };
+                                        break;
+                                    }
                                     lineIndexStack.push(indices[0]);
                                 } else {
                                     lineIndexStack.splice(-1, 1, indices[0]);

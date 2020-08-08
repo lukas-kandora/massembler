@@ -1,12 +1,13 @@
 <head>
     <meta charset="utf-8" />
+
+    <title>Massembler - write and run assembly in your browser</title>
+
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/colorisation.css">
-    <!----
-    <link rel="stylesheet" href="styles/reactions.css">
-    <!---->
     <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/compatibility.css">
     <link rel="stylesheet" href="styles/icons.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -27,8 +28,8 @@
     <main id="main" class="main">
         <section class="headline-panel">
             <div class="header-text-panel">
-                <h1 class="headline" :style="programValid ? '' : 'visibility: hidden;'">Massembler</h1>
-                <div class="error-stats-panel" :style="programValid ? 'visibility: hidden;' : ''">
+                <h1 class="headline" :style="(programValid || !edit) ? '' : 'visibility: hidden;'">Massembler</h1>
+                <div class="error-stats-panel" :style="!(programValid || !edit) ? '' : 'visibility: hidden;'">
                     {{ invalidEntryCount }} error{{ invalidEntryCount === 1 ? '' : 's' }} in
                     {{ invalidLineCount }} line{{ invalidLineCount === 1 ? '' : 's' }}
                 </div>

@@ -1,0 +1,5 @@
+
+/* chrome displays a small dropdown arrow in text inputs with option-datalist that covers the input */
+input[type="text"][list]::-webkit-calendar-picker-indicator {
+    display: none;
+}

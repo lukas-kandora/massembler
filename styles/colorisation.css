@@ -23,10 +23,10 @@
 .error-stats-panel,
 .line-panel.invalid,
 .line-panel.invalid::before,
-.command-list.edit .code-input.invalid:not(:hover):not(:focus-within),
-.command-list:not(.edit) .code-input.invalid,
-.command-list.edit .code-input.invalid:hover,
-.command-list.edit .code-input.invalid:focus-within,
+.command-list.edit .code-input-panel.invalid:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input-panel.invalid,
+.command-list.edit .code-input-panel.invalid:hover,
+.command-list.edit .code-input-panel.invalid:focus-within,
 .exec-error-panel,
 .exec-error-clear-button {
     --hue-in: 0;
@@ -45,9 +45,10 @@
 .line-panel.invalid::before,
 .line-panel.active:not(.invalid),
 .line-panel.invalid:not(.active),
-.line-panel.active,.line-panel.invalid,
-.command-list.edit .code-input.invalid:not(:hover):not(:focus-within),
-.command-list:not(.edit) .code-input.invalid {
+.line-panel.active,
+.line-panel.invalid,
+.command-list.edit .code-input-panel.invalid:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input-panel.invalid {
     --saturation-in: 20%;
 }
 
@@ -60,8 +61,8 @@
 }
 
 .error-stats-panel,
-.command-list.edit .code-input.invalid:hover,
-.command-list.edit .code-input.invalid:focus-within {
+.command-list.edit .code-input-panel.invalid:hover,
+.command-list.edit .code-input-panel.invalid:focus-within {
     --saturation-in: 50%;
 }
 
@@ -76,8 +77,8 @@
     --lightness-in: .13;
 }
 
-.command-list.edit .code-input:hover,
-.command-list.edit .code-input:focus-within {
+.command-list.edit .code-input-panel:hover,
+.command-list.edit .code-input-panel:focus-within {
     --lightness-in-b: .13;
 }
 
@@ -92,8 +93,8 @@ body,
 .indentation-button,
 .line-remove-button,
 .command-list,
-.command-list.edit .code-input:not(:hover):not(:focus-within),
-.command-list:not(.edit) .code-input.invalid,
+.command-list.edit .code-input-panel:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input-panel.invalid,
 .command-list.edit .comment-panel:hover,
 .command-list.edit .comment-panel:focus-within,
 .state-display,
@@ -122,8 +123,8 @@ body,
 }
 .headline,
 .error-stats-panel,
-.command-list.edit .code-input:hover,
-.command-list.edit .code-input:focus-within {
+.command-list.edit .code-input-panel:hover,
+.command-list.edit .code-input-panel:focus-within {
     --lightness-in: .8;
 }
 
@@ -133,10 +134,9 @@ body,
 .indentation-add-button,
 .indentation-button,
 .line-remove-button,
-.command-list.edit .code-input:not(:hover):not(:focus-within),
-.command-list:not(.edit) .code-input,
+.command-list.edit .code-input-panel:not(:hover):not(:focus-within),
+.command-list:not(.edit) .code-input-panel,
 .line-panel::before,
-.arg-panel::after,
 .comment-panel::before,
 .comment-input,
 .exec-error-panel,
@@ -161,8 +161,8 @@ body,
 .indentation-button,
 .line-remove-button,
 .command-list,
-.command-list.edit .code-input,
-.command-list:not(.edit) .code-input.invalid,
+.command-list.edit .code-input-panel,
+.command-list:not(.edit) .code-input-panel.invalid,
 .command-list.edit .comment-panel:hover,
 .command-list.edit .comment-panel:focus-within,
 .exec-error-panel,
@@ -190,8 +190,7 @@ body,
 }
 
 .line-panel::before,
-.code-input,
-.arg-panel::after,
+.code-input-panel,
 .comment-panel::before,
 .comment-input,
 .exec-error-panel,
@@ -212,7 +211,10 @@ body,
 }
 
 .placeholder-index-panel {
-    background: repeating-linear-gradient(135deg, var(--lightness-color) 0px, var(--lightness-color) 5px, transparent 5px, transparent 15px, var(--lightness-color) 15px, var(--lightness-color) 20px);
+    background: repeating-linear-gradient(135deg,
+        var(--lightness-color) 0px, var(--lightness-color) 5px,
+        transparent 5px, transparent 15px,
+        var(--lightness-color) 15px,var(--lightness-color) 20px);
 }
 
 /* more styling */
@@ -249,6 +251,7 @@ body,
     user-select: none;
 }
 
-.info-display {
+.info-display,
+.line-index-panel:last-child {
     isolation: isolate;
 }

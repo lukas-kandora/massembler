@@ -1,7 +1,7 @@
 Vue.component('manual-panel', {
     template: `
 <section class="manual-panel">
-    <h2 class="manual-headline">Manual</h2>
+    <h2 class="manual-headline">Reference</h2>
     <dl class="manual-definition-list">
         <template v-for="template in commandTemplates">
             <dt>{{ commandDef(template) }}</dt>
