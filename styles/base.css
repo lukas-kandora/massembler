@@ -9,10 +9,20 @@ dt,
 dd,
 h1,
 h2,
-h3 {
+h3,
+ul {
     display: block;
 }
 
 title {
     display: none;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+li {
+    display: list-item;
 }

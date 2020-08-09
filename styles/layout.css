@@ -1,6 +1,5 @@
 
 body {
-    margin: unset;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -53,14 +52,18 @@ body {
     padding: 7px 0px;
 }
 
+.control-button {
+    display: grid;
+    place-content: center;
+    font-size: 32px;
+
+    width: 60px;
+    height: 60px;
+}
+
 .headline-panel > :not(:first-child),
 .run-control-panel > :not(:first-child) {
     margin-left: 7px;
-}
-
-.headline-panel .icon {
-    padding: 15px;
-    --icon-size: 30px;
 }
 
 .header-text-panel {
@@ -161,13 +164,12 @@ instead, we use { opacity: 0%; } in colorisation.css
 .line-add-button {
     width: 100%;
     height: 12px;
-    
+
     display: grid;
     place-items: center;
-    
-    --icon-size: 12px;
-    --thickness: 0.35;
-    --direction: 2;
+    align-content: center;
+
+    font-size: 16px;
 }
 
 /* .line-add-button::before,
@@ -233,35 +235,27 @@ instead, we use { opacity: 0%; } in colorisation.css
 }
 
 .line-panel > .line-content-panel > .indentation-panel > .indentation-add-button {
-    width: 2ch;
+    width: 30px;
 
     flex-shrink: 0;
     
     display: grid;
-    align-content: center;
-    justify-content: center;
-
-    --icon-size: 12px;
-    --thickness: 0.35;
-    --direction: 1;
+    place-content: center;
+}
+.line-panel > .line-content-panel > .indentation-panel > .indentation-add-button > * {
+    font-size: 24px;
 }
 
 .line-panel > .line-content-panel > .indentation-panel > .indentation-button {
-    width: 39.6px;
+    width: 2ch;
     min-width: 0px;
 
     display: grid;
-    align-content: center;
-    justify-content: center;
+    place-content: center;
 
-    --icon-size: 12px;
-    --thickness: 0.3;
 }
-.line-panel > .line-content-panel > .indentation-panel > .indentation-button::before {
-    transform: rotate(45deg);
-}
-.line-panel > .line-content-panel > .indentation-panel > .indentation-button::after {
-    transform: rotate(135deg);
+.line-panel > .line-content-panel > .indentation-panel > .indentation-button > * {
+    font-size: 16px;
 }
 
 .line-panel > .line-content-panel > .code-panel {
@@ -270,9 +264,11 @@ instead, we use { opacity: 0%; } in colorisation.css
     display: flex;
 }
 
-.line-panel > .line-content-panel > .code-panel > .command-panel {
+.line-panel > .line-content-panel > .code-panel .code-input-panel {
     padding-left: 0.333ch;
     padding-right: 0.333ch;
+
+    display: flex;
 }
 
 .line-panel > .line-content-panel > .code-panel > .args-panel {
@@ -281,21 +277,10 @@ instead, we use { opacity: 0%; } in colorisation.css
 
 .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel {
     margin-left: 0.333ch;
-    display: flex;
-}
-
-.line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel > .arg-input {
-    padding-left: 0.333ch;
 }
 
 .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel:not(:last-child)::after {
-    padding-right: 0.333ch;
-
     content: ',';
-}
-
-.line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel:last-child > .arg-input {
-    padding-right: 0.333ch;
 }
 
 .line-panel > .line-content-panel > .comment-panel {
@@ -323,9 +308,9 @@ instead, we use { opacity: 0%; } in colorisation.css
 
     display: grid;
     place-items: center;
+    place-content: center;
 
-    --icon-size: 24px;
-    --thickness: .2;
+    font-size: 24px;
 }
 
 .info-display {
@@ -348,8 +333,12 @@ instead, we use { opacity: 0%; } in colorisation.css
 
     width: 30px;
     min-height: 30px;
-    --icon-size: 15px;
-    --thickness: 0.2;
+
+    display: grid;
+    place-items: center;
+    place-content: center;
+
+    font-size: 16px;
 }
 
 .state-display {
@@ -484,6 +473,14 @@ instead, we use { opacity: 0%; } in colorisation.css
     font-size: 36px;
 }
 
+.example-program-list {
+    padding: 0px 7px 7px 27px;
+}
+
+.example-program-list li {
+    font-size: 16px;
+}
+
 .manual-definition-list {
     display: flex;
     flex-direction: column;
@@ -541,25 +538,17 @@ instead, we use { opacity: 0%; } in colorisation.css
     width: 0px;
 }
 
-.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .command-panel {
+.command-list:not(.edit) .line-panel > .line-content-panel > .indentation-panel > .indentation-button {
+    visibility: hidden;
+}
+
+.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel .code-input-panel {
     padding-left: unset;
     padding-right: unset;
 }
 
 .command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel {
     margin-left: 1ch;
-}
-
-.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel > .arg-input {
-    padding-left: unset;
-}
-
-.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel:not(:last-child)::after {
-    padding-right: unset;
-}
-
-.command-list:not(.edit) .line-panel > .line-content-panel > .code-panel > .args-panel > .arg-panel:last-child > .arg-input {
-    padding-right: unset;
 }
 
 .command-list:not(.edit) .line-panel > .line-content-panel > .comment-panel {

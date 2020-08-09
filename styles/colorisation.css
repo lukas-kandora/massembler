@@ -83,6 +83,7 @@
 }
 
 :nth-child(odd) > .line-panel,
+.example-program-list,
 .manual-panel > dl > dd {
     --lightness-in: .15;
 }
@@ -175,6 +176,7 @@ body,
 .register-panel,
 .manual,
 .manual-headline,
+.example-program-list,
 .manual-panel > dl > dt,
 .manual-panel > dl > dd {
     background-color: var(--lightness-color);
@@ -189,25 +191,22 @@ body,
     color: var(--lightness-color);
 }
 
+.control-button,
+.line-add-button,
 .line-panel::before,
+.indentation-add-button,
+.indentation-button,
 .code-input-panel,
 .comment-panel::before,
 .comment-input,
+.line-remove-button,
 .exec-error-panel,
+.exec-error-clear-button,
 .line-index-panel,
 .cmp-state-option,
 .register-panel,
 .manual-panel {
     color: var(--lightness-color-b);
-}
-
-.control-button,
-.line-add-button,
-.indentation-add-button,
-.indentation-button,
-.line-remove-button,
-.exec-error-clear-button {
-    --icon-color: var(--lightness-color-b);
 }
 
 .placeholder-index-panel {
@@ -237,7 +236,7 @@ body,
 }
 
 .indentation-button:not(:hover):not(:focus-within) {
-    opacity: 5%;
+    opacity: 10%;
 }
 
 .indentation-add-button,

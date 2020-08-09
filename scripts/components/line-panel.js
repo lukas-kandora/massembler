@@ -6,8 +6,8 @@ Vue.component('line-panel', {
 <div class="line-panel" :class="lineValid ? [] : ['invalid']">
     <div class="line-content-panel">
         <div class="indentation-panel">
-            <button class="indentation-add-button icon director" v-on:click="line.indentation++"></button>
-            <button class="indentation-button icon cross" v-for="index in line.indentation" v-on:click="line.indentation--"></button>
+            <button class="indentation-add-button" v-on:click="line.indentation++"><i class="fas fa-angle-right"></i></button>
+            <button class="indentation-button" v-for="index in line.indentation" v-on:click="line.indentation--"><i class="fas fa-times"></i></button>
         </div>
         <div class="code-panel">
             <div class="command-panel code-input-panel" :class="commandValid ? [] : ['invalid']">
@@ -21,7 +21,7 @@ Vue.component('line-panel', {
             <input type="text" class="comment-input" v-model="line.comment" :size="line.comment.length == 0 ? 1 : 16" placeholder="">
         </label>
     </div>
-    <button class="line-remove-button icon cross" v-on:click="$emit('remove-line')"></button>
+    <button class="line-remove-button" v-on:click="$emit('remove-line')"><i class="fas fa-times"></i></button>
 </div>
 `,
     data: function () {
@@ -102,7 +102,9 @@ Vue.component('line-panel', {
         },
     },
     beforeDestroy: function () {
-        const invalidEntryCount = this.invalidEntryCount;
+        let invalidEntryCount = this.invalidEntryCount;
+        if (!this.commandValid)
+            invalidEntryCount++;
         if (invalidEntryCount !== 0)
             this.$emit('entries-invalidated', -invalidEntryCount);
         if (this.lineValid === false) 

@@ -8,6 +8,8 @@
     <link rel="icon" type="image/png" sizes="144x144" href="imgs/favicons/favicon-144x144.png">
     <link rel="icon" type="image/png" sizes="192x192" href="imgs/favicons/favicon-192x192.png">
     <link rel="icon" type="image/png" sizes="256x256" href="imgs/favicons/favicon-256x256.png">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/layout.css">
@@ -42,21 +44,20 @@
             </div>
             <run-control-panel v-if="!edit" :stage="stage" v-on:run="run" v-on:step="step" v-on:reset="reset"
                 v-on:stop="stop"></run-control-panel>
+            <button v-show="edit" class="copy-link-button control-button" title="Copy link to clipboard" v-on:click="copyLink"><i class="fas fa-link"></i></button>
             <div class="mode-toggle-panel">
-                <button class="control-button run-mode-button icon play" :style="edit ? '' : 'visibility: hidden;'"
-                    v-on:click="edit = false;"></button>
-                <button class="control-button edit-mode-button icon pen" :style="edit ? 'visibility: hidden;' : ''"
-                    v-on:click="edit = true;"></button>
+                <button class="control-button run-mode-button" :style="edit ? '' : 'visibility: hidden;'" v-on:click="edit = false;"><i class="fas fa-play"></i></button>
+                <button class="control-button edit-mode-button" :style="edit ? 'visibility: hidden;' : ''" v-on:click="edit = true;"><i class="fas fa-pen"></i></button>
             </div>
         </section>
-        <command-list :class="{ edit: edit }" ref="commandList" :active-line-index="activeLineIndex"
+        <command-list :class="{ edit: edit }" ref="command-list" :active-line-index="activeLineIndex"
             v-on:lines-invalidated="invalidLineCount += $event" v-on:entries-invalidated="invalidEntryCount += $event">
         </command-list>
         <div class="info-display" v-show="execError !== null">
             <div class="exec-error-panel">{{ execError === null ? '' : execError.msg }}</div>
-            <button class="exec-error-clear-button icon cross" v-on:click="execError = null;"></button>
+            <button class="exec-error-clear-button" v-on:click="execError = null;"><i class="fas fa-times"></i></button>
         </div>
-        <state-display ref="stateDisplay" v-show="!edit" v-on:active-line-index="activeLineIndex = $event"></state-display>
-        <manual-panel v-show="edit"></manual-panel>
+        <state-display ref="state-display" v-show="!edit" v-on:active-line-index="activeLineIndex = $event"></state-display>
+        <manual-panel v-show="edit" v-on:load-program="loadProgram($event.program, 'base64')"></manual-panel>
     </main>
 </body>

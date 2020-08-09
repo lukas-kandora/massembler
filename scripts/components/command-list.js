@@ -4,10 +4,10 @@ Vue.component('command-list', {
     props: ['activeLineIndex'],
     template: `
 <section class="command-list">
-    <button class="line-add-button icon director" v-on:click="addLine(0)"></button>
+    <button class="line-add-button" v-on:click="addLine(0)"><i class="fas fa-angle-down"></i></button>
     <div class="line-button-group-panel" v-for="(line, index) in lines" :key="line.id">
-        <line-panel :class="index === activeLineIndex ? 'active' : ''" :line="line" ref="line-panel" v-on:remove-line="removeLine($event, index)" v-on:line-validated="invalidLineCount--" v-on:line-invalidated="invalidLineCount++" v-on:entries-invalidated="invalidEntryCount += $event" v-on:add-line="addLine(index + 1)" v-on:focus-prev="focusPrev(index)" v-on:focus-next="focusNext(index)" v-on:merge-to-prev="mergeToPrev(index)" v-on:merge-to-next="mergeToNext(index)" v-on:prepend-line="prependLine(index)" v-on:append-line="appendLine(index)"></line-panel>
-        <button class="line-add-button icon director" v-on:click="addLine(index + 1)"></button>
+        <line-panel :class="index === activeLineIndex ? 'active' : ''" :line="line" ref="line-panel" v-on:remove-line="removeLine(index)" v-on:line-validated="invalidLineCount--" v-on:line-invalidated="invalidLineCount++" v-on:entries-invalidated="invalidEntryCount += $event" v-on:add-line="addLine(index + 1)" v-on:focus-prev="focusPrev(index)" v-on:focus-next="focusNext(index)" v-on:merge-to-prev="mergeToPrev(index)" v-on:merge-to-next="mergeToNext(index)" v-on:prepend-line="prependLine(index)" v-on:append-line="appendLine(index)"></line-panel>
+        <button class="line-add-button" v-on:click="addLine(index + 1)"><i class="fas fa-angle-down"></i></button>
     </div>
 </section>
 `,
@@ -64,40 +64,14 @@ Vue.component('command-list', {
         appendLine: function (index) {
             this.addLine(index + 1);
         },
-        removeLine: function (event, index) {
-            let retainIfFirst = false;
-            let retainIfLast = false;
-            let focusLine = 'next';
-            if (event !== undefined) {
-                if (event.hasOwnProperty('retainIfFirst')) {
-                    retainIfFirst = event.retainIfFirst;
-                }
-                if (event.hasOwnProperty('retainIfLast')) {
-                    retainIfLast = event.retainIfLast;
-                }
-                if (event.hasOwnProperty('focusLine')) {
-                    focusLine = event.focusLine;
-                }
-            }
-
+        removeLine: function (index) {
             const lines = this.lines;
-            if ((!retainIfFirst || index !== 0) && (!retainIfLast || (index + 1) !== lines.length)) {
-                switch (focusLine) {
-                case 'prev':
-                    if (index !== 0) {
-                        this.getLinePanel(index - 1).focus({ caretPos: 'right' });
-                    }
-                    break;
-                case 'next':
-                    if ((index + 1) !== lines.length) {
-                        this.getLinePanel(index + 1).focus({ caretPos: 'left' });
-                    }
-                    break;
-                default:
-                    console.log("Unknown focusLine:", focusLine);
-                }
-                lines.splice(index, 1);
+            if ((index + 1) !== lines.length) {
+                this.getLinePanel(index + 1).focus({ caretPos: 'left' });
+            } else if (index !== 0) {
+                this.getLinePanel(index - 1).focus({ caretPos: 'right' });
             }
+            lines.splice(index, 1);
         },
         focusPrev: function(index) {
             if (index === 0)
@@ -158,6 +132,42 @@ Vue.component('command-list', {
             const linePanelIndex = linePanels.map(lp => lp.line).indexOf(line);
             return linePanels[linePanelIndex];
         },
+        exportTo: function (format) {
+            switch (format) {
+            case 'base64':
+                const version = "1.0";
+
+                const arr = this.lines.map(line => [line.indentation, line.command, ...line.args, line.comment]);
+                const json = JSON.stringify(arr);
+                const tmp = encodeURIComponent(json);
+                const versionedTmp = "version:" + version + ";" + tmp;
+                const base64 = btoa(versionedTmp);
+                return base64;
+            }
+        },
+        importFrom: function (value, format) {
+            switch (format) {
+            case 'base64':
+                const versionedTmp = atob(value);
+                const versionDelimiterIndex = versionedTmp.indexOf(";");
+
+                const version = versionedTmp.substring("version:".length, versionDelimiterIndex);
+                const tmp = versionedTmp.substring(versionDelimiterIndex + 1);
+                switch (version) {
+                case "1.0":
+                    const json = decodeURIComponent(tmp);
+                    const arr = JSON.parse(json);
+
+                    this.lines = arr.map(line => ({
+                        id: Symbol(),
+                        indentation: line[0],
+                        command: line[1],
+                        args: line.slice(2, -1),
+                        comment: line[line.length - 1],
+                    }));
+                }
+            }
+        }
     },
     mounted: function () {
         if (this.lines.length === 0)

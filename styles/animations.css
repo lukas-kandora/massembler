@@ -20,6 +20,7 @@
     }
 }
 
+.copy-link-button,
 .run-control-panel > * {
     animation-name: top-slide-in;
     animation-duration: 0.5s;
@@ -49,9 +50,7 @@
     }
 }
 
-.command-list:not(.edit) .line-add-button,
-.indentation-add-button,
-.command-list:not(.edit) .line-remove-button {
+.command-list:not(.edit) .line-add-button {
     animation-name: visibility-retainer;
     animation-duration: 0.5s;
 }

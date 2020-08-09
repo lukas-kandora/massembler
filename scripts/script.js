@@ -10,7 +10,7 @@ window.onload = function () {
     });
 
 
-    window.vue = new Vue({
+    const vue = new Vue({
         el: "#main",
         data: {
             edit: true,
@@ -26,11 +26,11 @@ window.onload = function () {
                 return this.invalidLineCount === 0;
             },
             execState: function () {
-                const stateDisplay = this.$refs.stateDisplay;
+                const stateDisplay = this.$refs['state-display'];
                 return stateDisplay === undefined ? undefined : stateDisplay.$data;
             },
             programLines: function () {
-                return this.$refs.commandList.$data.lines;
+                return this.$refs['command-list'].$data.lines;
             },
             stage: function () {
                 const execState = this.execState;
@@ -39,6 +39,17 @@ window.onload = function () {
             },
         },
         methods: {
+            loadProgram: function (value, format) {
+                const commandList = this.$refs['command-list'];
+                commandList.importFrom(value, format);
+            },
+            copyLink: function () {
+                const commandList = this.$refs['command-list'];
+                const encodedProgram = commandList.exportTo('base64');
+
+                const url = location.protocol + '//' + location.host + location.pathname + '?program=' + encodedProgram;
+                navigator.clipboard.writeText(url);
+            },
             run: function () {
 
                 function fun() {
@@ -202,4 +213,16 @@ window.onload = function () {
             },
         }
     });
+    window.vue = vue;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let program = urlParams.get('program');
+    if (program !== null) {
+
+        if (demoPrograms.has(program))
+            program = demoPrograms.get(program).program;
+
+        vue.loadProgram(program, 'base64');
+    }
+
 };

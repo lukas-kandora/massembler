@@ -56,7 +56,7 @@ class CommandTemplate {
 
 const commandTemplates = new Map();
 Object.entries({
-    mov: [`Sets the value of register <code>a</code> to the value of b. b may be an integer or register.`,
+    mov: [`Sets the value of register a to the value of b. b may be an integer or register.`,
     mov, ["a", "register"], ["b", "integer", "register"]],
     add: [`Adds to the value of register a the value of b. b may be an integer or register.`,
     add, ["a", "register"], ["b", "integer", "register"]],
@@ -89,6 +89,24 @@ Object.entries({
         ...arr.slice(1)
             .map(typeName => argumentTypes.get(typeName))));
     commandTemplates.set(key, new CommandTemplate(key, desc, executor, ...argDefs));
+});
+
+class DemoProgram {
+    constructor(id, name, program) {
+        this.id = id;
+        this.name = name;
+        this.program = program;
+        Object.freeze(this);
+    }
+};
+
+const demoPrograms = new Map();
+Object.entries({
+    factorial: ["Factorial", "dmVyc2lvbjoxLjA7JTVCJTVCMCUyQyUyMm1vdiUyMiUyQyUyMmElMjIlMkMlMjI3JTIyJTJDJTIyJTIyJTVEJTJDJTVCMCUyQyUyMm1vdiUyMiUyQyUyMmIlMjIlMkMlMjJhJTIyJTJDJTIyJTIyJTVEJTJDJTVCMCUyQyUyMmNhbGwlMjIlMkMlMjJmYWN0JTIyJTJDJTIyJTIyJTVEJTJDJTVCMCUyQyUyMmVuZCUyMiUyQyUyMiUyMiU1RCUyQyU1QjAlMkMlMjJmYWN0JTNBJTIyJTJDJTIyJTIyJTVEJTJDJTVCMSUyQyUyMmRlYyUyMiUyQyUyMmElMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIybXVsJTIyJTJDJTIyYiUyMiUyQyUyMmElMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIyY21wJTIyJTJDJTIyYSUyMiUyQyUyMjElMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIyam5lJTIyJTJDJTIyZmFjdCUyMiUyQyUyMiUyMiU1RCUyQyU1QjElMkMlMjJyZXQlMjIlMkMlMjIlMjIlNUQlNUQ"],
+    fibonacci: ["Fibonacci", "dmVyc2lvbjoxLjA7JTVCJTVCMCUyQyUyMm1vdiUyMiUyQyUyMmElMjIlMkMlMjIxMCUyMiUyQyUyMiUyMiU1RCUyQyU1QjAlMkMlMjJtb3YlMjIlMkMlMjJiJTIyJTJDJTIyMCUyMiUyQyUyMiUyMiU1RCUyQyU1QjAlMkMlMjJtb3YlMjIlMkMlMjJjJTIyJTJDJTIyMSUyMiUyQyUyMiUyMiU1RCUyQyU1QjAlMkMlMjJtb3YlMjIlMkMlMjJkJTIyJTJDJTIyMCUyMiUyQyUyMiUyMiU1RCUyQyU1QjAlMkMlMjJjYWxsJTIyJTJDJTIyZmliJTIyJTJDJTIyJTIyJTVEJTJDJTVCMCUyQyUyMmVuZCUyMiUyQyUyMiUyMiU1RCUyQyU1QjAlMkMlMjIlMjIlMkMlMjIlMjIlNUQlMkMlNUIwJTJDJTIyZmliJTNBJTIyJTJDJTIyJTIyJTVEJTJDJTVCMSUyQyUyMmRlYyUyMiUyQyUyMmElMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIybW92JTIyJTJDJTIyZCUyMiUyQyUyMmIlMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIyYWRkJTIyJTJDJTIyYiUyMiUyQyUyMmMlMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIybW92JTIyJTJDJTIyYyUyMiUyQyUyMmQlMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIyY21wJTIyJTJDJTIyYSUyMiUyQyUyMjAlMjIlMkMlMjIlMjIlNUQlMkMlNUIxJTJDJTIyam5lJTIyJTJDJTIyZmliJTIyJTJDJTIyJTIyJTVEJTJDJTVCMSUyQyUyMnJldCUyMiUyQyUyMiUyMiU1RCU1RA"],
+}).forEach(entry => {
+    const [key, value] = entry;
+    demoPrograms.set(key, new DemoProgram(key, value[0], value[1]));
 });
 
 // commands
